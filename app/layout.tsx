@@ -1,19 +1,29 @@
-//app/layout.tsx
-import "@/app/global.css";
+// app/layout.tsx
 import { Metadata } from "next";
+import Header from "../components/Header";
+import Sidebar from "../components/SideBar";
+import { SessionProvider } from "next-auth/react";
+import   
+ "@/app/global.css";
 
 export const metadata: Metadata = {
   title: "Cinema Guru | Atlas School",
 };
 
-type Props = {
-  children: React.ReactNode;
-};
-
-export default function RootLayout({ children }: Props) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`antialiased  bg-[#00003c] text-white`}>{children}</body>
+      <body className={`antialiased bg-[#00003c] text-white min-h-screen`}>
+        <SessionProvider>
+          <Header /> {/* Move Header outside the flex container */}
+          <div className="flex"> 
+            <Sidebar />
+            <main className="flex-1">
+              {children}
+            </main>
+          </div>
+        </SessionProvider>
+      </body>
     </html>
   );
 }
