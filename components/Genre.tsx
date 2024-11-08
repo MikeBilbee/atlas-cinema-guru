@@ -1,9 +1,10 @@
+//components/Genre.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 
 interface GenreProps {
-  onFilmsFetched: (films: any[]) => void; // Replace 'any' with actual film type
+  onFilmsFetched: (films: any[]) => void;
 }
 
 const Genre: React.FC<GenreProps> = ({ onFilmsFetched }) => {
@@ -66,7 +67,7 @@ const Genre: React.FC<GenreProps> = ({ onFilmsFetched }) => {
           <button
             key={genre}
             onClick={() => handleGenreToggle(genre)}
-            className={`p-2 rounded-md border border-gray-400 ${
+            className={`p-2 rounded-full border border-lumi-teal ${
               selectedGenres.includes(genre) ? "bg-lumi-teal" : ""
             }`}
           >

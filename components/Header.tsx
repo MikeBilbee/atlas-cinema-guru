@@ -8,7 +8,7 @@ import signout from "@/assets/signout.svg";
 const Header: React.FC = () => {
   const { data: session } = useSession();
   return (
-    <header className="bg-lumi-teal flex justify-between items-center text-lg font-semibold px-6 py-4 text-lumi-navy"> 
+    <header className="bg-lumi-teal flex justify-between items-center text-lg font-semibold px-6 py-4 text-lumi-navy fixed top-0 left-0 w-full z-50"> 
 	<div className="flex items-center gap-2">
       <Image 
         src={film}

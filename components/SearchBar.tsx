@@ -1,21 +1,35 @@
+// SearchBar.tsx
 "use client";
 
 import { useState } from "react";
 
 interface SearchBarProps {
-  onTitlesFetched: (titles: any[]) => void; // Replace 'any' with the actual type of your titles
+    onTitlesFetched: (titles: Film[]) => void;
+	onSearch: (params: { query: string; minYear?: number; maxYear?: number }) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onTitlesFetched }) => {
-  const [title, setTitle] = useState("");
-  const [minYear, setMinYear] = useState<number | undefined>(undefined);
-  const [maxYear, setMaxYear] = useState<number | undefined>(undefined);
+interface Film {
+    title: string;
+    id: string;
+	released: string;
+    synopsis: string;
+    genre: string;
+}
 
-  const handleSearch = async () => {
-    const url = new URL('/api/titles', window.location.origin); 
+const SearchBar: React.FC<SearchBarProps> = ({ onTitlesFetched, onSearch  }) => {
+    const [title, setTitle] = useState("");
+    const [minYear, setMinYear] = useState<number | undefined>(undefined);
+    const [maxYear, setMaxYear] = useState<number | undefined>(undefined);
+
+    const handleSearch = async () => {
+    const url = new URL('/api/titles', window.location.origin);
     url.searchParams.set('query', title);
-    if (minYear) url.searchParams.set('minYear', minYear.toString());
-    if (maxYear) url.searchParams.set('maxYear', maxYear.toString());
+    if (minYear !== undefined) {
+      url.searchParams.set('minYear', minYear.toString());
+    }
+    if (maxYear !== undefined) {
+      url.searchParams.set('maxYear', maxYear.toString());
+    }
 
     try {
       const response = await fetch(url.toString());
@@ -23,52 +37,58 @@ const SearchBar: React.FC<SearchBarProps> = ({ onTitlesFetched }) => {
         throw new Error(`API request failed with status ${response.status}`);
       }
       const data = await response.json();
-      onTitlesFetched(data.title); 
+
+      onTitlesFetched(data.title);
+
+      // Call onSearch to update Home component's state
+      onSearch({ query: title, minYear, maxYear }); 
     } catch (error) {
       console.error("Error fetching titles:", error);
-      // Handle the error (e.g., display an error message to the user)
     }
   };
 
-  return (
-    <div className="bg-lumi-navy p-4 rounded-lg shadow-md">
-      <div>
-        <input
-          type="text"
-          placeholder="Search by title..."
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full p-2 border border-gray-400 rounded-md"
-        />
-      </div>
-      <div className="flex items-center mt-2 space-x-2"> {/* Added flex and space-x-2 */}
+    return (
+        <div className="bg-lumi-navy p-4 rounded-full shadow-md">
+            <div>
+                <input
+                    type="text"
+                    placeholder="Search by title..."
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="w-full p-2 border border-lumi-teal rounded-full text-black"
+
+                />
+            </div>
+            <div className="flex items-center mt-2 space-x-2">
         <div>
           <input
             type="number"
             placeholder="Min Year"
-            value={minYear}
+            // Use conditional rendering to set the value only if minYear is defined
+            value={minYear ?? ""} // Or value={minYear !== undefined ? minYear : ""} 
             onChange={(e) => setMinYear(parseInt(e.target.value) || undefined)}
-            className="w-24 p-2 border border-gray-400 rounded-md"
+            className="w-24 p-2 border border-lumi-teal rounded-full text-black"
           />
         </div>
         <div>
           <input
             type="number"
             placeholder="Max Year"
-            value={maxYear}
+            // Use conditional rendering to set the value only if maxYear is defined
+            value={maxYear ?? ""} // Or value={maxYear !== undefined ? maxYear : ""}
             onChange={(e) => setMaxYear(parseInt(e.target.value) || undefined)}
-            className="w-24 p-2 border border-gray-400 rounded-md"
+            className="w-24 p-2 border border-lumi-teal rounded-full text-black"
           />
         </div>
       </div>
-      <button
-        onClick={handleSearch}
-        className="mt-4 bg-lumi-teal hover:bg-lumi-dark-teal text-white font-bold py-2 px-4 rounded"
-      >
-        Search
-      </button>
-    </div>
-  );
+            <button
+                onClick={handleSearch}
+                className="mt-4 bg-lumi-teal hover:bg-lumi-dark-teal text-white font-bold py-2 px-4 rounded"
+            >
+                Search
+            </button>
+        </div>
+    );
 };
 
 export default SearchBar;
