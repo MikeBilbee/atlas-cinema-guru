@@ -6,32 +6,37 @@ import { SessionProvider } from "next-auth/react";
 import { NavigationProvider } from "../contexts/NavigationContext";
 import "@/app/global.css";
 import Home from "@/components/Home";
-//import { ReactNode } from "react";
+import Favorites from "@/components/Favorites";
 
 export const metadata: Metadata = {
     title: "Cinema Guru | Atlas School",
 };
 
 export default function RootLayout({ children, params }: { children: React.ReactNode, params: { slug: string[] } }) {
-    return (
-        <html lang="en">
-            <body className={`antialiased bg-lumi-navy text-white min-h-screen`}>
-                <SessionProvider>
-                    <NavigationProvider>
-                        <Header />
-                        <div className="flex pt-[3.5rem]">
-                            <Sidebar />
-                            <main className="flex-1">
-                                <Home activeSection={getActiveSection(params)} /> 
-                                {children}
-                            </main>
-                        </div>
-                    </NavigationProvider>
-                </SessionProvider>
-            </body>
-        </html>
-    );
-}
+	return (
+	  <html lang="en">
+		<body className={`antialiased bg-lumi-navy text-white min-h-screen`}>
+		  <SessionProvider>
+			<NavigationProvider>
+			  <Header />
+			  <div className="flex pt-[3.5rem]">
+				<Sidebar />
+				<main className="flex-1">
+				  {/* Conditionally render Home or Favorites */}
+				  {getActiveSection(params) === 'favorites' ? ( 
+					<Favorites activeSection={getActiveSection(params)} /> 
+				  ) : (
+					<Home activeSection={getActiveSection(params)} /> 
+				  )}
+				  {children}
+				</main>
+			  </div>
+			</NavigationProvider>
+		  </SessionProvider>
+		</body>
+	  </html>
+	);
+  }
 
 // Helper function to extract active section from Referer header
 function getActiveSection(params: { slug: string[] }): string {

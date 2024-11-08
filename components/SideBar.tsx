@@ -1,17 +1,26 @@
 // components/Sidebar.tsx
 "use client"
 import Link from "next/link";
-import {
+import { 
   MdHome,
   MdFavorite,
   MdOutlineWatchLater,
 } from "react-icons/md";
-import { useNavigation } from '../contexts/NavigationContext';
+import { useContext } from 'react';
+import { NavigationContext } from '@/contexts/NavigationContext'; 
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
 
 const Sidebar: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const { activeSection, setActiveSection } = useNavigation();
+  const context = useContext(NavigationContext); 
+  const router = useRouter();
+
+  if (context === undefined) {
+    throw new Error('Sidebar must be used within a NavigationProvider');
+  }
+
+  const { activeSection, setActiveSection } = context;
 
   const getLinkClassName = (section: 'home' | 'favorites' | 'watchLater') => {
     return `sidebar-link flex items-center ${
@@ -31,15 +40,21 @@ const Sidebar: React.FC = () => {
         <Link 
           href="/" 
           className={getLinkClassName('home')}
-          onClick={() => setActiveSection('home')}
+          onClick={() => {
+            setActiveSection('home'); 
+            router.refresh();
+          }}
         >
-          <MdHome className="text-xl" />
-          {isSidebarOpen && <span className="ml-2">Home</span>}
-        </Link>
-        <Link 
+				<MdHome className="text-xl" />
+				{isSidebarOpen && <span className="ml-2">Home</span>}
+				</Link>
+				<Link 
           href="/favorites" 
           className={getLinkClassName('favorites')}
-          onClick={() => setActiveSection('favorites')}
+          onClick={() => {
+            setActiveSection('favorites');
+            router.refresh();
+          }}
         >
           <MdFavorite className="text-xl" />
           {isSidebarOpen && <span className="ml-2">Favorites</span>}
@@ -47,7 +62,10 @@ const Sidebar: React.FC = () => {
         <Link 
           href="/watch-later" 
           className={getLinkClassName('watchLater')}
-          onClick={() => setActiveSection('watchLater')}
+          onClick={() => {
+            setActiveSection('watchLater'); 
+            router.refresh(); // Add router.refresh here for consistency
+          }}
         >
           <MdOutlineWatchLater className="text-xl" />
           {isSidebarOpen && <span className="ml-2">Watch Later</span>}
