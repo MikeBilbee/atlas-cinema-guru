@@ -1,13 +1,13 @@
-//components/Genre.tsx
+// components/Genre.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 
 interface GenreProps {
-  onFilmsFetched: (films: any[]) => void;
+  onGenresSelected: (genres: string[]) => void; 
 }
 
-const Genre: React.FC<GenreProps> = ({ onFilmsFetched }) => {
+const Genre: React.FC<GenreProps> = ({ onGenresSelected }) => {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [genres, setGenres] = useState<string[]>([]);
 
@@ -22,7 +22,6 @@ const Genre: React.FC<GenreProps> = ({ onFilmsFetched }) => {
         setGenres(data.genres);
       } catch (error) {
         console.error("Error fetching genres:", error);
-        // Handle error, e.g., show an error message
       }
     };
 
@@ -41,10 +40,10 @@ const Genre: React.FC<GenreProps> = ({ onFilmsFetched }) => {
           throw new Error(`API request failed with status ${response.status}`);
         }
         const data = await response.json();
-        onFilmsFetched(data.title); // Assuming the API response has a 'title' property
+        // Assuming the API response has a 'title' property for the films
+        onGenresSelected(selectedGenres); 
       } catch (error) {
         console.error("Error fetching films:", error);
-        // Handle error, e.g., show an error message
       }
     };
 
@@ -62,7 +61,7 @@ const Genre: React.FC<GenreProps> = ({ onFilmsFetched }) => {
   return (
     <div className="bg-lumi-navy p-4 rounded-lg shadow-md">
       <h3 className="text-lg font-semibold mb-2 text-white">Genre</h3>
-      <div className="grid grid-cols-5 gap-2"> {/* Grid for buttons */}
+      <div className="grid grid-cols-5 gap-2"> 
         {genres.map((genre) => (
           <button
             key={genre}

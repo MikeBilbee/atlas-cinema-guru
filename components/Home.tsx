@@ -32,6 +32,8 @@ const Home: React.FC<HomeProps> = ({ activeSection }) => {
   
   const filmsPerPage = 6;
 
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+
   const handleTitlesFetched = (titles: Film[]) => {
     setFilms(titles);
   };
@@ -39,6 +41,11 @@ const Home: React.FC<HomeProps> = ({ activeSection }) => {
   const handleSearch = (params: { query: string; minYear?: number; maxYear?: number }) => {
     setSearchParams(params);
     setCurrentPage(1);
+  };
+
+  const handleGenresSelected = (genres: string[]) => {
+    setSelectedGenres(genres);
+    setCurrentPage(1); // Reset to page 1
   };
 
   useEffect(() => {
@@ -53,6 +60,9 @@ const Home: React.FC<HomeProps> = ({ activeSection }) => {
         if (searchParams.maxYear !== undefined) {
           url.searchParams.set('maxYear', searchParams.maxYear.toString());
         }
+		if (selectedGenres.length > 0) { 
+			url.searchParams.set('genres', selectedGenres.join(','));
+		}
 
         const response = await fetch(url.toString());
         if (!response.ok) {
@@ -66,7 +76,7 @@ const Home: React.FC<HomeProps> = ({ activeSection }) => {
     };
 
     fetchFilms();
-  }, [currentPage, searchParams]);
+  }, [currentPage, searchParams, selectedGenres]);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -76,7 +86,7 @@ const Home: React.FC<HomeProps> = ({ activeSection }) => {
         <div className="flex justify-between mb-4">
           {/* Pass handleSearch to SearchBar */}
           <SearchBar onTitlesFetched={handleTitlesFetched} onSearch={handleSearch} /> 
-          <Genre onFilmsFetched={() => { /* Handle films fetched */ }} />
+          <Genre onGenresSelected={handleGenresSelected} />
         </div>
       )}
       <div className="grid grid-cols-3 px-6 gap-4">
