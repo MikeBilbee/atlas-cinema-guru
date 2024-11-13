@@ -63,7 +63,7 @@ const MovieTile: React.FC<MovieTileProps> = ({
         }
         const watchLaterData = await watchLaterResponse.json();
         const watchLaterItems: WatchLater[] = watchLaterData.watchLater;
-        const isWatchLater = watchLaterItems.some((item) => item.id === id);
+        const isWatchLater = watchLaterItems.some((watchLater) => watchLater.id === id);
         setIsWatchLater(isWatchLater);
       } catch (error) {
         console.error("Error fetching status:", error);
@@ -98,7 +98,7 @@ const MovieTile: React.FC<MovieTileProps> = ({
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      const response = await fetch(`/api/watchlater/${id}`, {
+      const response = await fetch(`/api/watch-later/${id}`, {
         method: isWatchLater ? "DELETE" : "POST",
       });
 
@@ -157,7 +157,7 @@ const MovieTile: React.FC<MovieTileProps> = ({
         </div>
       )}
       {isHovered && (
-        <div className="absolute bottom-0 left-0 w-full bg-lumi-navy text-white p-2 text-sm">
+        <div className="absolute bottom-0 left-0 w-full bg-lumi-light-navy text-white p-2 text-sm">
           <div className="flex justify-between items-center">
             <div>
               {title} ({released})

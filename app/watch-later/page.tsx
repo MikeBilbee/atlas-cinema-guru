@@ -49,8 +49,9 @@ const WatchLater: React.FC = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div key={refreshKey}>
-      <div className="grid grid-cols-3 px-6 gap-4 mt-8" key={refreshKey}>
+    <div key={refreshKey} className="mt-8">
+		<h2 className="text-center text-4xl font-bold">Watch Later</h2>
+      <div className="grid grid-cols-3 px-6 gap-16 mt-8" key={refreshKey}>
         {films.map((film) => (
           <MovieTile
             key={film.id}
@@ -61,12 +62,12 @@ const WatchLater: React.FC = () => {
             genre={film.genre}
             id={film.id}
 			onFavoriteToggle={handleFavoriteToggle}
-            onWatchLaterToggle={handleWatchLaterToggle} // Use a different prop for watch later
+            onWatchLaterToggle={handleWatchLaterToggle}
           />
         ))}
       </div>
       <PageButtons
-        totalItems={100} // Replace with actual total watch later count
+        totalItems={100}
         itemsPerPage={filmsPerPage}
         currentPage={currentPage}
         onPageChange={paginate}
