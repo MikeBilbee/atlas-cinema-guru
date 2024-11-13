@@ -92,7 +92,7 @@ const Home: React.FC = () => {
                 <SearchBar onTitlesFetched={handleTitlesFetched} onSearch={handleSearch} />
                 <Genre onGenresSelected={handleGenresSelected} />
             </div>
-            <div className="grid grid-cols-3 px-6 gap-4">
+            <div className="grid grid-cols-3 px-6 gap-16">
                 {films.map((film) => (
                     <MovieTile
                         key={film.id}

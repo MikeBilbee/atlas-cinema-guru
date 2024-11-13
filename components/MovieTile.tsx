@@ -153,7 +153,7 @@ const MovieTile: React.FC<MovieTileProps> = ({
         </div>
       )}
       {isHovered && (
-        <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-80 text-white p-2 text-sm">
+        <div className="absolute bottom-0 left-0 w-full bg-lumi-navy text-white p-2 text-sm">
           <div className="flex justify-between items-center">
             <div>
               {title} ({released})

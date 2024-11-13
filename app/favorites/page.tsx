@@ -49,8 +49,9 @@ const Favorites: React.FC = () => {
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
-    <div key={refreshKey}>
-      <div className="grid grid-cols-3 px-6 gap-4 mt-8">
+    <div key={refreshKey} className="mt-8">
+		<h2 className="text-center text-4xl font-bold">Favorites</h2>
+      <div className="grid grid-cols-3 px-6 gap-16 mt-8">
         {films.map((film) => (
           <MovieTile
             key={film.id}
