@@ -24,7 +24,7 @@ const WatchLater: React.FC = () => {
   useEffect(() => {
     const fetchWatchLater = async () => {
       try {
-        const response = await fetch(`/api/watchlater?page=${currentPage}`);
+        const response = await fetch(`/api/watch-later?page=${currentPage}`);
         if (!response.ok) {
           throw new Error(`API request failed with status ${response.status}`);
         }

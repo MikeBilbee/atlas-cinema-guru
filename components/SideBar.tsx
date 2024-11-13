@@ -60,7 +60,7 @@ const Sidebar: React.FC = () => {
                     <MdFavorite className="text-xl" />
                     {isSidebarOpen && <span className="ml-2">Favorites</span>}
                 </Link>
-                <Link href="/watchlater" className={getLinkClassName()}>
+                <Link href="/watch-later" className={getLinkClassName()}>
                     <MdOutlineWatchLater className="text-xl" />
                     {isSidebarOpen && <span className="ml-2">Watch Later</span>}
                 </Link>
