@@ -13,6 +13,7 @@ export default {
 		  "lumi-teal": "#54F4D0",
 		  "lumi-dark-teal": "#1DD2AF",
 		  "lumi-navy": "#00003C",
+		  "lumi-light-navy": "#080464"
 		},
 		fontFamily: {
 		  poppins: ["Poppins", "sans-serif"],

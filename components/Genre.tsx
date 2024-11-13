@@ -60,7 +60,7 @@ const Genre: React.FC<GenreProps> = ({ onGenresSelected }) => {
 
   return (
     <div className="bg-lumi-navy p-4 rounded-lg shadow-md">
-      <h3 className="text-lg font-semibold mb-2 text-white">Genre</h3>
+      <h3 className="text-sm font-semibold mb-2 text-white">Genre</h3>
       <div className="grid grid-cols-5 gap-2"> 
         {genres.map((genre) => (
           <button

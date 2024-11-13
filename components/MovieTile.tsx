@@ -156,7 +156,9 @@ const MovieTile: React.FC<MovieTileProps> = ({
             </div>
           </div>
           <div className="mt-1">{synopsis}</div>
-          <div className="mt-1">Genre: {genre}</div>
+          <div className="mt-1"><span className="px-2 py-1 rounded-full border-2 border-lumi-dark-teal bg-lumi-dark-teal">
+            {genre}
+          </span></div>
         </div>
       )}
     </div>

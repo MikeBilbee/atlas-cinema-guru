@@ -48,36 +48,39 @@ const SearchBar: React.FC<SearchBarProps> = ({ onTitlesFetched, onSearch  }) => 
   };
 
     return (
-        <div className="bg-lumi-navy p-4 rounded-full shadow-md">
+        <div className="bg-lumi-navy p-4 shadow-md">
             <div>
+			<h3 className="text-sm font-semibold mb-2 text-white">Search</h3>
                 <input
                     type="text"
                     placeholder="Search by title..."
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full p-2 border border-lumi-teal rounded-full text-black"
+                    className="w-full p-2 border border-lumi-teal bg-lumi-light-navy rounded-full text-black"
 
                 />
             </div>
             <div className="flex items-center mt-2 space-x-2">
         <div>
+		<h3 className="text-sm font-semibold mb-2 text-white">Min Year</h3>
           <input
             type="number"
             placeholder="Min Year"
             // Use conditional rendering to set the value only if minYear is defined
             value={minYear ?? ""} // Or value={minYear !== undefined ? minYear : ""} 
             onChange={(e) => setMinYear(parseInt(e.target.value) || undefined)}
-            className="w-24 p-2 border border-lumi-teal rounded-full text-black"
+            className="w-24 p-2 border border-lumi-teal bg-lumi-light-navy rounded-full text-black"
           />
         </div>
         <div>
+		<h3 className="text-sm font-semibold mb-2 text-white">Max Year</h3>
           <input
             type="number"
             placeholder="Max Year"
             // Use conditional rendering to set the value only if maxYear is defined
             value={maxYear ?? ""} // Or value={maxYear !== undefined ? maxYear : ""}
             onChange={(e) => setMaxYear(parseInt(e.target.value) || undefined)}
-            className="w-24 p-2 border border-lumi-teal rounded-full text-black"
+            className="w-24 p-2 border border-lumi-teal bg-lumi-light-navy rounded-full text-black"
           />
         </div>
       </div>
