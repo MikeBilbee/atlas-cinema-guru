@@ -19,6 +19,7 @@ const Home: React.FC = () => {
 
     const [films, setFilms] = useState<Film[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
+	const [refreshKey, setRefreshKey] = useState(0);
 
     // Ensure type consistency for searchParams
     const [searchParams, setSearchParams] = useState<{ query: string; minYear?: number; maxYear?: number }>({
@@ -73,12 +74,20 @@ const Home: React.FC = () => {
         };
 
         fetchFilms();
-    }, [currentPage, searchParams, selectedGenres]);
+    }, [currentPage, searchParams, selectedGenres, refreshKey]);
 
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
+	const handleFavoriteToggle = () => {
+		setRefreshKey(refreshKey + 1); // Increment the refresh key
+	};
+
+	const handleWatchLaterToggle = () => {
+		setRefreshKey((prevKey) => prevKey + 1);
+	};
+
     return (
-        <div>
+        <div key={refreshKey}>
             <div className="flex justify-between mb-4">
                 <SearchBar onTitlesFetched={handleTitlesFetched} onSearch={handleSearch} />
                 <Genre onGenresSelected={handleGenresSelected} />
@@ -87,11 +96,14 @@ const Home: React.FC = () => {
                 {films.map((film) => (
                     <MovieTile
                         key={film.id}
+						id={film.id}
                         title={film.title}
                         coverArtUrl={`/images/${film.id}.webp`}
                         released={film.released}
                         synopsis={film.synopsis}
                         genre={film.genre}
+						onFavoriteToggle={handleFavoriteToggle}
+						onWatchLaterToggle={handleWatchLaterToggle}
                     />
                 ))}
             </div>

@@ -1,4 +1,4 @@
-// app/favorites/page.tsx
+// app/watch-later/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -15,27 +15,27 @@ interface Film {
   watchLater: boolean;
 }
 
-const Favorites: React.FC = () => {
+const WatchLater: React.FC = () => {
   const [films, setFilms] = useState<Film[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const filmsPerPage = 6;
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
-    const fetchFavorites = async () => {
+    const fetchWatchLater = async () => {
       try {
-        const response = await fetch(`/api/favorites?page=${currentPage}`);
+        const response = await fetch(`/api/watchlater?page=${currentPage}`);
         if (!response.ok) {
           throw new Error(`API request failed with status ${response.status}`);
         }
         const data = await response.json();
-        setFilms(data.favorites);
+        setFilms(data.watchLater);
       } catch (error) {
-        console.error("Error fetching favorites:", error);
+        console.error("Error fetching watch later films:", error);
       }
     };
 
-    fetchFavorites();
+    fetchWatchLater();
   }, [currentPage, refreshKey]);
 
   const handleFavoriteToggle = () => {
@@ -50,7 +50,7 @@ const Favorites: React.FC = () => {
 
   return (
     <div key={refreshKey}>
-      <div className="grid grid-cols-3 px-6 gap-4 mt-8">
+      <div className="grid grid-cols-3 px-6 gap-4 mt-8" key={refreshKey}>
         {films.map((film) => (
           <MovieTile
             key={film.id}
@@ -61,12 +61,12 @@ const Favorites: React.FC = () => {
             genre={film.genre}
             id={film.id}
 			onFavoriteToggle={handleFavoriteToggle}
-			onWatchLaterToggle={handleWatchLaterToggle}
+            onWatchLaterToggle={handleWatchLaterToggle} // Use a different prop for watch later
           />
         ))}
       </div>
       <PageButtons
-        totalItems={100} // Replace with actual total favorites count
+        totalItems={100} // Replace with actual total watch later count
         itemsPerPage={filmsPerPage}
         currentPage={currentPage}
         onPageChange={paginate}
@@ -75,4 +75,4 @@ const Favorites: React.FC = () => {
   );
 };
 
-export default Favorites;
+export default WatchLater;

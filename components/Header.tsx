@@ -24,16 +24,16 @@ const Header: React.FC = () => {
             <p className="text-base font-semibold">
               Welcome, {session.user.email}
             </p>
-			<div className="flex items-center gap-2 text-sm">
-            <button onClick={() => signOut()}>
+			<div className="flex items-center text-sm">
+            <button onClick={() => signOut()} className="flex items-center gap-1">
               <Image 
                 src={signout} 
                 alt="Logout button"
                 width={15} 
-                height={13} 
+                height={16} 
               />
+			  <p>Log out</p>
             </button>
-			<p>Log Out</p>
 			</div>
           </div>
         </>
