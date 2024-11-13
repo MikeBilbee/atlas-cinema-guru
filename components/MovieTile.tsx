@@ -83,8 +83,12 @@ const MovieTile: React.FC<MovieTileProps> = ({
         throw new Error(`API request failed with status ${response.status}`);
       }
 
-      setIsFavorited(!isFavorited);
-      onFavoriteToggle();
+      if (isFavorited) {
+        onFavoriteToggle();
+      } else {
+        setIsFavorited(true);
+      }
+
     } catch (error) {
       console.error("Error toggling favorite:", error);
     }
@@ -94,7 +98,7 @@ const MovieTile: React.FC<MovieTileProps> = ({
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      const response = await fetch(`/api/watch-later/${id}`, {
+      const response = await fetch(`/api/watchlater/${id}`, {
         method: isWatchLater ? "DELETE" : "POST",
       });
 
@@ -104,8 +108,12 @@ const MovieTile: React.FC<MovieTileProps> = ({
         throw new Error(errorMessage);
       }
 
-      setIsWatchLater(!isWatchLater);
-      onWatchLaterToggle();
+      if (isWatchLater) {
+        onWatchLaterToggle();
+      } else {
+        setIsWatchLater(true);
+      }
+
     } catch (error) {
       console.error("Error toggling watch later:", error);
     }
