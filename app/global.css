@@ -1,3 +1,11 @@
 /* app/globals.css */
-@import "tailwindcss/preflight";
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+    --font-display: "Poppins", "sans-serif";
+
+    --color-lumi-teal: #54f4d0;
+    --color-lumi-dark-teal: #1dd2af;
+    --color-lumi-navy: #00003c;
+    --color-lumi-light-navy: #080464;
+}
