@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import clockfull from "assets/clockfull.svg";
 import starfull from "assets/starfull.svg";
-import folder from "assets/folder.svg"
+import folder from "assets/folder.svg";
 
 interface Activity {
 	id: string;
