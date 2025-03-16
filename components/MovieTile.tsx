@@ -44,7 +44,7 @@ const MovieTile: React.FC<MovieTileProps> = ({
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const favoriteResponse = await fetch("/api/favorites");
+        const favoriteResponse = await fetch("/api/favorites?page=1");
         if (!favoriteResponse.ok) {
           throw new Error(
             `API request failed with status ${favoriteResponse.status}`
@@ -63,7 +63,9 @@ const MovieTile: React.FC<MovieTileProps> = ({
         }
         const watchLaterData = await watchLaterResponse.json();
         const watchLaterItems: WatchLater[] = watchLaterData.watchLater;
-        const isWatchLater = watchLaterItems.some((watchLater) => watchLater.id === id);
+        const isWatchLater = watchLaterItems.some(
+          (watchLater) => watchLater.id === id
+        );
         setIsWatchLater(isWatchLater);
       } catch (error) {
         console.error("Error fetching status:", error);
@@ -84,11 +86,11 @@ const MovieTile: React.FC<MovieTileProps> = ({
       }
 
       if (isFavorited) {
+        setIsFavorited(false);
         onFavoriteToggle();
       } else {
         setIsFavorited(true);
       }
-
     } catch (error) {
       console.error("Error toggling favorite:", error);
     }
@@ -109,11 +111,11 @@ const MovieTile: React.FC<MovieTileProps> = ({
       }
 
       if (isWatchLater) {
+        setIsWatchLater(false);
         onWatchLaterToggle();
       } else {
         setIsWatchLater(true);
       }
-
     } catch (error) {
       console.error("Error toggling watch later:", error);
     }
@@ -164,9 +166,11 @@ const MovieTile: React.FC<MovieTileProps> = ({
             </div>
           </div>
           <div className="mt-1 text-sm py-4">{synopsis}</div>
-          <div className="mt-1"><span className=" px-2 py-1 rounded-full border-2 border-lumi-dark-teal bg-lumi-dark-teal">
-            {genre}
-          </span></div>
+          <div className="mt-1">
+            <span className=" px-2 py-1 rounded-full border-2 border-lumi-dark-teal bg-lumi-dark-teal">
+              {genre}
+            </span>
+          </div>
         </div>
       )}
     </div>
