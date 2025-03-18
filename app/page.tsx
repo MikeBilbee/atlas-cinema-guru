@@ -87,11 +87,11 @@ const Home: React.FC = () => {
 
     return (
         <div key={refreshKey}>
-            <div className="flex justify-between mb-4">
+            <div className="flex flex-col sm:flex-row justify-between mb-4">
                 <SearchBar onTitlesFetched={handleTitlesFetched} onSearch={handleSearch} />
                 <Genre onGenresSelected={handleGenresSelected} />
             </div>
-            <div className="grid grid-cols-3 pl-6 pr-28 gap-y-4 gap-x-20">
+            <div className="grid grid-cols-1 sm:grid-cols-3 pl-6 pr-28 gap-y-4 gap-x-20">
                 {films.map((film) => (
                     <MovieTile
                         key={film.id}

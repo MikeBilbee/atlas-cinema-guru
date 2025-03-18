@@ -42,13 +42,8 @@ const Sidebar: React.FC = () => {
         }`;
     };
 
-	const formatUtcTime = (timestamp: string): string => {
-		const date = new Date(timestamp);
-		return date.toISOString().replace("T", " ").slice(0, 19) + " UTC";
-	};
-
     return (
-        <aside
+			<aside
             className={`bg-lumi-dark-teal transition-all duration-300 ease-in-out min-h-screen ${
                 isSidebarOpen ? "w-64 pl-6 pr-10" : "w-20"
             }`}
@@ -78,7 +73,7 @@ const Sidebar: React.FC = () => {
           {activities.map((activity) => (
             <div key={activity.id}>
               <p>
-			  {formatUtcTime(activity.timestamp)}
+			  {new Date(activity.timestamp).toLocaleString()}{""}
 			  {activity.activity === "FAVORITED" ? (
                   <>Favorited <span className="font-bold">{activity.title}</span></>
                 ) : activity.activity === "WATCH_LATER" ? (

@@ -21,10 +21,10 @@ const Header: React.FC = () => {
       {session && session.user ? (
         <>
           <div className="flex items-center gap-4">
-            <p className="text-base font-semibold">
+            <p className="text-base font-semibold hidden md:block">
               Welcome, {session.user.email}
             </p>
-			<div className="flex items-center text-sm">
+			<div className="flex items-center text-sm ">
             <button onClick={() => signOut()} className="flex items-center gap-1">
               <Image 
                 src={signout} 
@@ -32,7 +32,7 @@ const Header: React.FC = () => {
                 width={15} 
                 height={16} 
               />
-			  <p>Log out</p>
+			  <p className="hidden md:block">Log out</p>
             </button>
 			</div>
           </div>

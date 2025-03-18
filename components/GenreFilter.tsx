@@ -65,7 +65,7 @@ const GenreFilter: React.FC<GenreProps> = ({ onGenresSelected }) => {
           <button
             key={genre}
             onClick={() => handleGenreToggle(genre)}
-            className={`p-2 rounded-full border border-lumi-teal ${
+            className={`min-w-[60px] p-2 rounded-full border border-lumi-teal whitespace-nowrap overflow-hidden text-ellipsis ${
               selectedGenres.includes(genre) ? "bg-lumi-teal text-lumi-navy" : ""
             }`}
           >
