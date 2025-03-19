@@ -50,7 +50,7 @@ const WatchLater: React.FC = () => {
 
   return (
     <div key={refreshKey} className="mt-8">
-		<h2 className="text-center text-4xl font-bold">Watch Later</h2>
+      <h2 className="text-center text-4xl font-bold">Watch Later</h2>
       <div className="grid grid-cols-3 px-6 gap-16 mt-8" key={refreshKey}>
         {films.map((film) => (
           <MovieTile
@@ -61,8 +61,11 @@ const WatchLater: React.FC = () => {
             synopsis={film.synopsis}
             genre={film.genre}
             id={film.id}
-			onFavoriteToggle={handleFavoriteToggle}
+            onFavoriteToggle={handleFavoriteToggle}
             onWatchLaterToggle={handleWatchLaterToggle}
+            favorited={film.favorited}
+            watchLater={film.watchLater}
+            currentPage={currentPage}
           />
         ))}
       </div>

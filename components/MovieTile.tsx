@@ -17,14 +17,9 @@ interface MovieTileProps {
   id: string;
   onFavoriteToggle: () => void;
   onWatchLaterToggle: () => void;
-}
-
-interface Favorite {
-  id: string;
-}
-
-interface WatchLater {
-  id: string;
+  favorited: boolean;
+  watchLater: boolean;
+  currentPage: number;
 }
 
 const MovieTile: React.FC<MovieTileProps> = ({
@@ -36,44 +31,21 @@ const MovieTile: React.FC<MovieTileProps> = ({
   id,
   onFavoriteToggle,
   onWatchLaterToggle,
+  favorited,
+  watchLater,
+  currentPage,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isFavorited, setIsFavorited] = useState(false);
-  const [isWatchLater, setIsWatchLater] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(favorited);
+  const [isWatchLater, setIsWatchLater] = useState(watchLater);
 
   useEffect(() => {
-    const fetchStatus = async () => {
-      try {
-        const favoriteResponse = await fetch("/api/favorites?page=1");
-        if (!favoriteResponse.ok) {
-          throw new Error(
-            `API request failed with status ${favoriteResponse.status}`
-          );
-        }
-        const favoriteData = await favoriteResponse.json();
-        const favorites: Favorite[] = favoriteData.favorites;
-        const isFavorited = favorites.some((favorite) => favorite.id === id);
-        setIsFavorited(isFavorited);
+    setIsFavorited(favorited);
+  }, [favorited]);
 
-        const watchLaterResponse = await fetch(`/api/watch-later?page=1`);
-        if (!watchLaterResponse.ok) {
-          throw new Error(
-            `API request failed with status ${watchLaterResponse.status}`
-          );
-        }
-        const watchLaterData = await watchLaterResponse.json();
-        const watchLaterItems: WatchLater[] = watchLaterData.watchLater;
-        const isWatchLater = watchLaterItems.some(
-          (watchLater) => watchLater.id === id
-        );
-        setIsWatchLater(isWatchLater);
-      } catch (error) {
-        console.error("Error fetching status:", error);
-      }
-    };
-
-    fetchStatus();
-  }, [id]);
+  useEffect(() => {
+    setIsWatchLater(watchLater);
+  }, [watchLater]);
 
   const toggleFavorite = async () => {
     try {
@@ -85,12 +57,8 @@ const MovieTile: React.FC<MovieTileProps> = ({
         throw new Error(`API request failed with status ${response.status}`);
       }
 
-      if (isFavorited) {
-        setIsFavorited(false);
-        onFavoriteToggle();
-      } else {
-        setIsFavorited(true);
-      }
+      setIsFavorited(!isFavorited);
+      onFavoriteToggle();
     } catch (error) {
       console.error("Error toggling favorite:", error);
     }
@@ -110,12 +78,8 @@ const MovieTile: React.FC<MovieTileProps> = ({
         throw new Error(errorMessage);
       }
 
-      if (isWatchLater) {
-        setIsWatchLater(false);
-        onWatchLaterToggle();
-      } else {
-        setIsWatchLater(true);
-      }
+      setIsWatchLater(!isWatchLater);
+      onWatchLaterToggle();
     } catch (error) {
       console.error("Error toggling watch later:", error);
     }
