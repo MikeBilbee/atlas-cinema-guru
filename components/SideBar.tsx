@@ -75,9 +75,9 @@ const Sidebar: React.FC = () => {
               <p>
 			  {new Date(activity.timestamp).toLocaleString()}{""}
 			  {activity.activity === "FAVORITED" ? (
-                  <>Favorited <span className="font-bold">{activity.title}</span></>
+                  <> Favorited <span className="font-bold">{activity.title}</span></>
                 ) : activity.activity === "WATCH_LATER" ? (
-                  <>Added <span className="font-bold">{activity.title}</span> to watch later</>
+                  <> Added <span className="font-bold">{activity.title}</span> to watch later</>
                 ) : (
                   <>{activity.activity} <span className="font-bold">{activity.title}</span></> 
                 )}
